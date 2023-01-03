@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ENDPOINT_USERS = "http://localhost:3000/api/usuarios";
-const ENDPOINT_PRODUCTS = "localhost:3000/api/productos";
+const ENDPOINT_PRODUCTS = "http://localhost:3000/api/productos";
 
 
 // Usuarios
@@ -22,21 +22,23 @@ export const createUser = (nombre, correo, password) => {
     return axios.post(`${ENDPOINT_USERS}/`, user);
 }
 
-export const renovateToken = (nombre, correo, password) => {
-    const token = {
-        nombre,
-        correo,
-        password
-    };
-   return axios.get(`${ENDPOINT_USERS}/renew`, {
+export const renovateToken = () => {
+    return axios.get(`${ENDPOINT_USERS}/renew`, {
         headers: {
-          'x-api-key': `${localStorage.getItem("token")}`
+            'x-api-key': `${localStorage.getItem("token")}`
         }
-      })
+    })
 }
 
 export const deleteToken = () => {
-   localStorage.removeItem("token");
+    localStorage.removeItem("token");
 }
 
 // Productos
+
+export const getProductsByUser = (id) => {
+    const token = {
+        id,
+    };
+    return axios.get(`${ENDPOINT_PRODUCTS}/getProducts/${id}`)
+}

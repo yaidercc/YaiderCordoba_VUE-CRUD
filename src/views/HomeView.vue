@@ -1,19 +1,32 @@
 <script>
-import { renovateToken,deleteToken } from "@/logic/auth";
+import { renovateToken, deleteToken, getProductsByUser } from "@/logic/auth";
 export default {
-    beforeCreate() {
+    data: () => ({
+        productos: [],
+    }),
+    beforeCreate: async () => {
+        try {
+            const resp = await renovateToken(localStorage.getItem("token"));
+            const { token, usuario } = resp.data;
+            const { id } = usuario;
+            localStorage.setItem("token",token);
+            getProductsByUser(id).
+                then(response => {
+                    console.log(response);
+                })
+        } catch (error) {
+            console.log(error);
+            this.$router.push("/login");
+        }
 
-            renovateToken(localStorage.getItem("token"))
-            .catch(errr=>{
-                this.$router.push("/login");
-            })
-        
     },
+
     methods: {
-        logout(){
+        logout() {
             deleteToken();
             this.$router.push("/login");
         }
+
     }
 }
 </script>
