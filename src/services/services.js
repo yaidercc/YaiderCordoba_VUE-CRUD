@@ -37,8 +37,12 @@ export const deleteToken = () => {
 // Productos
 
 export const getProductsByUser = (id) => {
-    const token = {
-        id,
-    };
     return axios.get(`${ENDPOINT_PRODUCTS}/getProducts/${id}`)
+}
+
+export const createProduct = (nombre,precio,imagen,propietario) => {
+    const body = {
+        nombre,precio,imagen,propietario
+    };
+    return axios.post(`${ENDPOINT_PRODUCTS}/createProduct`,body)
 }

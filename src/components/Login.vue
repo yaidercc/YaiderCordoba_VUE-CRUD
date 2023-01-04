@@ -1,5 +1,5 @@
 <script>
-import { loginUser,renovateToken } from "@/logic/auth";
+import { loginUser,renovateToken } from "../services/services";
 export default {
   data: () => ({
     error: false,
@@ -31,7 +31,8 @@ export default {
         this.error = true;
       }
     }
-  }
+  },
+  name: 'LoginComponent',
 };
 </script>
 
