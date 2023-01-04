@@ -32,24 +32,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.container {
-  width: 1200px;
-  max-width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 .nav-menu{
-  padding: 15px;
-}
-.d-flex {
-  display: flex;
-
-  &.align-center {
-    align-items: center;
-  }
-
-  &.justify-between {
-    justify-content: space-between;
-  }
+  padding: 15px 0;
 }
 </style>

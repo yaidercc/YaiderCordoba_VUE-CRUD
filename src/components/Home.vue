@@ -1,5 +1,5 @@
 <script>
-import { renovateToken, deleteToken, getProductsByUser,createProduct } from "../services/services";
+import { renovateToken, deleteToken, getProductsByUser, createProduct, updateProduct, deleteProduct } from "../services/services";
 import NavigationComponent from "../components/Navigation.vue";
 import FormComponent from "../components/Form.vue";
 
@@ -7,8 +7,10 @@ export default {
     data: () => ({
         products: [],
         nombre: '',
-        showModal:false,
-        id_user:'',
+        showModal: false,
+        id_user: '',
+        isUpdating: false,
+        dataProductToEdit: {}
     }),
     beforeCreate() {
         renovateToken(localStorage.getItem("token"))
@@ -25,33 +27,63 @@ export default {
             this.$router.push("/login");
         },
         handleEvent() {
-            this.showModal=true;
+            this.showModal = !this.showModal;
         },
-        addProduct({nombre,precio,imagen}){
-            createProduct(nombre,precio,imagen,this.id_user)
-            .then(resp=>{
-                if(resp.data.ok){
-                    this.getProducts();
-                }
-            })
-        },
-        getProducts(){
-            renovateToken(localStorage.getItem("token"))
-            .then(resp => {
-                const { token, usuario } = resp.data;
-                const { id, nombre } = usuario;
-                this.nombre = nombre;
-                this.id_user=id
-                // localStorage.setItem("token", token);
-                getProductsByUser(id).
-                    then(response => {
-                        this.products = response.data.producto
-                        console.log(this.products)
+        manageProduct({ nombre, precio, imagen }) {
+            if (this.isUpdating) {
+                updateProduct(nombre, precio, imagen, this.dataProductToEdit._id)
+                    .then(resp => {
+                        if (resp.data.ok) {
+                            this.getProducts();
+
+                        }
                     })
-            })
-            .catch(err => {
-                this.$router.push("/login");
-            })
+            } else {
+                createProduct(nombre, precio, imagen, this.id_user)
+                    .then(resp => {
+                        if (resp.data.ok) {
+                            this.getProducts();
+                        }
+                    })
+            }
+            this.resetValues();
+        },
+        getProducts() {
+            renovateToken(localStorage.getItem("token"))
+                .then(resp => {
+                    const { token, usuario } = resp.data;
+                    const { id, nombre } = usuario;
+                    this.nombre = nombre;
+                    this.id_user = id
+                    // localStorage.setItem("token", token);
+                    getProductsByUser(id).
+                        then(response => {
+                            this.products = response.data.producto
+                        })
+                })
+                .catch(err => {
+                    this.$router.push("/login");
+                })
+        },
+        getProduct(id) {
+            this.dataProductToEdit = this.products.filter(item => item._id == id)[0];
+            this.isUpdating = true;
+            this.showModal = true;
+        },
+        resetValues() {
+            this.dataProductToEdit = {};
+            this.isUpdating = false;
+            this.showModal = false;
+        },
+        deleteProduct(id) {
+            if(confirm("Estas seguro que deseas eliminar este producto")){
+                deleteProduct(id)
+                .then(resp => {
+                    if (resp.data.ok) {
+                        this.getProducts();
+                    }
+                })
+            }
         }
     },
     name: 'HomeComponent',
@@ -63,14 +95,21 @@ export default {
 </script>
 
 <template>
-    <NavigationComponent nombre="yaidercc" v-on:custom-event="handleEvent" />
-    <FormComponent v-on:custom-event="addProduct"/>
-    <h1>HOME</h1>
+    <NavigationComponent v-bind:nombre="this.nombre" v-on:custom-event="handleEvent" />
+    <FormComponent v-on:custom-event="manageProduct" v-if="showModal"
+        v-bind:dataProductToEdit="this.dataProductToEdit" />
+    <div class="container">
+        <h1>HOME</h1>
 
-    <div v-for="(value, key) in this.products">
-        <p>Nombre: {{ value.nombre }}</p>
-        <p>Precio: {{ value.precio }}</p>
-        <p>Calificacion: {{ value.calificacion }}</p>
+        <div class="products d-flex justify-between wrap">
+            <div v-for="value in this.products">
+                <p>Nombre: {{ value.nombre }}</p>
+                <p>Precio: {{ value.precio }}</p>
+                <p>Calificacion: {{ value.calificacion }}</p>
+                <button @click="getProduct(value._id)">editar</button>
+                <button @click="deleteProduct(value._id)">Eliminar</button>
+            </div>
+        </div>
     </div>
 
 </template>

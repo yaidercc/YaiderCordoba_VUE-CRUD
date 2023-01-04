@@ -1,6 +1,28 @@
-*{
+* {
   margin: 0;
   padding: 0;
+}
+
+.container {
+  width: 1200px;
+  max-width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex.align-center {
+  align-items: center;
+}
+
+.d-flex.justify-between {
+  justify-content: space-between;
+}
+.wrap{
+  flex-wrap: wrap;
 }
 /* @import './base.css';
 

@@ -46,3 +46,13 @@ export const createProduct = (nombre,precio,imagen,propietario) => {
     };
     return axios.post(`${ENDPOINT_PRODUCTS}/createProduct`,body)
 }
+
+export const updateProduct = (nombre,precio,imagen,id_producto) => {
+    const body = {
+        nombre,precio,imagen
+    };
+    return axios.put(`${ENDPOINT_PRODUCTS}/updateProduct/${id_producto}`,body)
+}
+export const deleteProduct = (id_producto) => {
+    return axios.delete(`${ENDPOINT_PRODUCTS}/deleteProduct/${id_producto}`)
+}
