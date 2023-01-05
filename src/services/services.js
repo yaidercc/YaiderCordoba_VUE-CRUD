@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const ENDPOINT_USERS = "http://localhost:3000/api/usuarios";
-const ENDPOINT_PRODUCTS = "http://localhost:3000/api/productos";
+const ENDPOINT_USERS = "http://localhost:3500/api/usuarios";
+const ENDPOINT_PRODUCTS = "http://localhost:3500/api/productos";
 
 
 // Usuarios
@@ -19,7 +19,7 @@ export const createUser = (nombre, correo, password) => {
         correo,
         password
     };
-    return axios.post(`${ENDPOINT_USERS}/`, user);
+    return axios.post(`${ENDPOINT_USERS}/createUser`, user);
 }
 
 export const renovateToken = () => {

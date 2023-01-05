@@ -1,5 +1,5 @@
 <script>
-import { loginUser, renovateToken } from "../services/services";
+import { createUser, renovateToken } from "../services/services";
 export default {
   data: () => ({
     error: false,
