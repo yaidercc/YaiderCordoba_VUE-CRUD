@@ -30,12 +30,12 @@ export default {
             this.showModal = !this.showModal;
         },
         manageProduct({ nombre, precio, imagen }) {
+            
             if (this.isUpdating) {
                 updateProduct(nombre, precio, imagen, this.dataProductToEdit._id)
                     .then(resp => {
                         if (resp.data.ok) {
                             this.getProducts();
-
                         }
                     })
             } else {
@@ -99,21 +99,22 @@ export default {
     <FormComponent v-on:custom-event="manageProduct" v-if="showModal"
         v-bind:dataProductToEdit="this.dataProductToEdit" />
     <div class="container">
-        <h1>HOME</h1>
+        <h1>Productos</h1>
 
-        <div class="products d-flex justify-between wrap">
+        <div class="products d-flex justify-between">
             <div v-for="value in this.products">
-                <p>Nombre: {{ value.nombre }}</p>
-                <p>Precio: {{ value.precio }}</p>
-                <p>Calificacion: {{ value.calificacion }}</p>
-                <button @click="getProduct(value._id)">editar</button>
-                <button @click="deleteProduct(value._id)">Eliminar</button>
+                <img src="../assets/logo.svg" alt="">
+                <p><span class="bold">Nombre: </span>{{ value.nombre }}</p>
+                <p><span class="bold">Precio: </span>{{ value.precio }}</p>
+                <p><span class="bold">Calificacion: </span> {{ value.calificacion }}</p>
+                <button @click="getProduct(value._id)" class="btn edit">Editar</button>
+                <button @click="deleteProduct(value._id)" class="btn eliminar">Eliminar</button>
             </div>
         </div>
     </div>
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

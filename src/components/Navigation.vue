@@ -22,10 +22,10 @@ export default {
   <div class="container">
     <nav class="d-flex align-center justify-between nav-menu">
       <h2>LOGO</h2>
-      <div class="links">
-        <button @click="emitEvent">Agregar</button>
-        <a href="#">{{this.nombre}}</a>
-        <button @click="logout">Hola</button>
+      <div class="links d-flex align-center">
+        <button @click="emitEvent" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Agregar </button>
+        <h3>{{this.nombre}}</h3>
+        <button @click="logout" class="btn salir-btn">Salir</button>
       </div>
     </nav>
   </div>
@@ -35,5 +35,18 @@ export default {
 
 .nav-menu{
   padding: 15px 0;
+  .links{
+    *{
+      margin-right: 5px;
+      
+    }
+  }
+}
+.btn{
+  width: 100px;
+}
+.salir-btn{
+  background-color: red;
+  width: 50px;
 }
 </style>

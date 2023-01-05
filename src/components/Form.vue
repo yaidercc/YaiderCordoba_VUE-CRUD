@@ -7,7 +7,7 @@ export default {
     data: () => ({
         nombre: '',
         precio: '',
-        imagen: ''
+        imagen: 'imgaen.jpg'
     }),
     mounted() {
         this.resetValues()
@@ -57,7 +57,7 @@ export default {
                     <label for="imagen">Ingresa la imagen</label>
                     <input v-model="imagen" type="text" id="imagen" placeholder="image.jpg" required/>
                 </div>
-                <input type="submit" value="Entrar">
+                <input type="submit" value="Guardar" class="btn">
             </form>
         </div>
     </div>
