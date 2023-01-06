@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const ENDPOINT_USERS = "http://localhost:3500/api/usuarios";
-const ENDPOINT_PRODUCTS = "http://localhost:3500/api/productos";
+const ENDPOINT_USERS = "https://yaidercordobanode-crud-production.up.railway.app/api/usuarios";
+const ENDPOINT_PRODUCTS = "https://yaidercordobanode-crud-production.up.railway.app/api/productos";
 
 
 // Usuarios

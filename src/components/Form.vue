@@ -36,7 +36,7 @@ export default {
         resetValues() {
             this.nombre = ''
             this.precio = ''
-            this.imagen = ''
+            this.imagen = 'imgaen.jpg'
         }
     },
 }
