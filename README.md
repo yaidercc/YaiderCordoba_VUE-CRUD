@@ -12,3 +12,6 @@ Para ejecutar el proyecto
 npm run dev
 ```
 
+Tambien puedes usar la aplicacion accediendo al siguiente link:
+
+https://tiendacrud.netlify.app/
