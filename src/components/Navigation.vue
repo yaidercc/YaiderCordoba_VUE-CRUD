@@ -23,8 +23,8 @@ export default {
     <nav class="d-flex align-center justify-between nav-menu">
       <h2>LOGO</h2>
       <div class="links d-flex align-center">
+        <h4>{{this.nombre}}</h4>
         <button @click="emitEvent" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Agregar </button>
-        <h3>{{this.nombre}}</h3>
         <button @click="logout" class="btn salir-btn">Salir</button>
       </div>
     </nav>
