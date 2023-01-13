@@ -1,11 +1,12 @@
 <script>
-import { loginUser, renovateToken } from "../services/services";
+import { validarInfoToken } from "../services/services";
 export default {
   data: () => ({
     error: false,
     errMsg: "",
     clave: "",
     confirmacionClave: "",
+    id_user: 0
   }),
   // Metodo que se ejecuta una vez el componente se ha renderizado
   mounted() {
@@ -13,18 +14,19 @@ export default {
   },
   methods: {
 
-    async sendEmail() {
+    async getInfoToken() {
       try {
         this.errMsg = '';
         this.error = false;
-        if (this.clave != this.confirmacionClave) {
-          this.errMsg = 'las claves no coinciden';
-          his.error = true;
-        } else {
-          await sendEmailUser(this.correo);
-          alert("correo enviado, revisa tu bandeja de entrada o tu carpeta de spam.")
-          // Redireccionar al login
+        // Obtener el token de la url
+        const url = new URL(window.location.href);
+        const token = url.searchParams.get("parametername");
+        if (!token) {
+          alert("No cuentas con un token valido")
           this.$router.push("/login");
+        } else {
+          const infoToken = await validarInfoToken();
+          this.id_user=infoToken.id_user;
         }
 
       } catch (error) {
@@ -33,7 +35,7 @@ export default {
         this.error = true;
       }
     },
-    async getInfoToken() {
+    async resetPassword() {
       try {
         this.errMsg = '';
         this.error = false;
@@ -41,9 +43,9 @@ export default {
           this.errMsg = 'las claves no coinciden';
           his.error = true;
         } else {
-          await sendEmailUser(this.correo);
-          alert("correo enviado, revisa tu bandeja de entrada o tu carpeta de spam.")
+          await this.resetPassword(this.clave, this.id_user);
           // Redireccionar al login
+          alert("clave cambiada con exito");
           this.$router.push("/login");
         }
 

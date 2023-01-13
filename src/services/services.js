@@ -37,25 +37,42 @@ export const createUser = (nombre, correo, password) => {
     return axios.post(`${ENDPOINT_USERS}/createUser`, user);
 }
 
+/**
+ * Funcion encargada de enviar el email a los usuarios
+ * @param {*} correo 
+ * @returns 
+ */
 export const sendEmailUser = (correo) => {
     const data = {
         correo
     };
     return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
 }
-export const resetPassword = (clave) => {
+/**
+ * Funcion encargada de validar la informacion que viene en el token
+ * @param {*} token 
+ * @returns 
+ */
+export const validarInfoToken = (token) => {
     const data = {
-        clave
+        token
     };
-    return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
+    return axios.post(`${ENDPOINT_USERS}/validateToken`, data);
 }
 
-export const velidarInfoToken = (token) => {
+/**
+ * Funcion encargada de enviar la nueva contraseña
+ * @param {*} token 
+ * @param {*} id_user 
+ * @returns 
+ */
+export const resetPassword = (clave,id_user) => {
     const data = {
         clave
     };
-    return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
+    return axios.post(`${ENDPOINT_USERS}/resetPassword/${id_user}`, data);
 }
+
 /**
  * Funcion para renovar el token 
  * @returns 

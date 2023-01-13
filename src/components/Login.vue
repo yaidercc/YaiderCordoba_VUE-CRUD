@@ -1,5 +1,5 @@
 <script>
-import { loginUser,renovateToken } from "../services/services";
+import { loginUser, renovateToken } from "../services/services";
 export default {
   data: () => ({
     error: false,
@@ -9,19 +9,19 @@ export default {
   }),
   beforeCreate() {
     renovateToken(localStorage.getItem("token"))
-      .then(resp=>{
-          this.$router.push("/");
+      .then(resp => {
+        this.$router.push("/");
       })
   },
   methods: {
-   
+
     async login() {
       try {
         this.errMsg = '';
         this.error = false;
         const resp = await loginUser(this.correo, this.password);
         // Se guarda el token en el localstorage
-        localStorage.setItem("token",resp.data.token);
+        localStorage.setItem("token", resp.data.token);
         // Redireccionar al home
         this.$router.push("/");
       } catch (error) {
@@ -44,18 +44,19 @@ export default {
     <div class="container-form">
       <h1>Iniciar sesion</h1>
       <form action @submit.prevent="login">
-  
+
         <div>
           <label for="email">Ingresa tu correo</label>
           <input v-model="correo" type="email" id="email" placeholder="juanito13@gmail.com" />
         </div>
-  
-        <div >
+
+        <div>
           <label for="clave">Ingresa tu contraseña</label>
           <input v-model="password" type="password" id="clave" placeholder="Juan123" />
         </div>
-  
+
         <p v-if="error" class="error">{{ errMsg }}</p>
+        <router-link to="/sendEmail">Olvide mi contraseña.</router-link>
         <div class="d-flex w-100"><input type="submit" value="Entrar" class="btn"></div>
         <p class="mt-10">No tienes cuenta? <router-link to="/singup">Registrate</router-link></p>
       </form>
@@ -64,29 +65,33 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.container-login { 
+.container-login {
   display: flex;
   align-items: center;
   height: 100vh;
-  .container-form{
+
+  .container-form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    
+
     flex-basis: 80%;
     height: 100%;
-    form{
+
+    form {
       width: 400px;
     }
   }
-  .container-logo{
+
+  .container-logo {
     flex-basis: 20%;
     height: 100%;
     background-color: #248AFF;
     color: #fff;
   }
-  .mt-10{
+
+  .mt-10 {
     margin-top: 10px;
   }
 }
