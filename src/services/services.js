@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // Endpoinst api
-const ENDPOINT_USERS = "https://yaidercordobanode-crud-production.up.railway.app/api/usuarios";
-const ENDPOINT_PRODUCTS = "https://yaidercordobanode-crud-production.up.railway.app/api/productos";
+// const ENDPOINT_USERS = "https://yaidercordobanode-crud-production.up.railway.app/api/usuarios";
+// const ENDPOINT_PRODUCTS = "https://yaidercordobanode-crud-production.up.railway.app/api/productos";
 
-
+const ENDPOINT_USERS = "http://localhost:3500/api/usuarios";
 // Usuarios
 
 /**
@@ -37,6 +37,25 @@ export const createUser = (nombre, correo, password) => {
     return axios.post(`${ENDPOINT_USERS}/createUser`, user);
 }
 
+export const sendEmailUser = (correo) => {
+    const data = {
+        correo
+    };
+    return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
+}
+export const resetPassword = (clave) => {
+    const data = {
+        clave
+    };
+    return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
+}
+
+export const velidarInfoToken = (token) => {
+    const data = {
+        clave
+    };
+    return axios.post(`${ENDPOINT_USERS}/sendEmailToUpdatePass`, data);
+}
 /**
  * Funcion para renovar el token 
  * @returns 

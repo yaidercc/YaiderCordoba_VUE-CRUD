@@ -18,6 +18,16 @@ const router = createRouter({
       name: "registro",
       component: () => import("../components/Registro.vue"),
     },
+    {
+      path: "/sendEmail",
+      name: "sendEmail",
+      component: () => import("../components/sendEmail.vue"),
+    },
+    {
+      path: "/resetPassword",
+      name: "resetPassword",
+      component: () => import("../components/resetPassword.vue"),
+    },
   ],
 });
 
