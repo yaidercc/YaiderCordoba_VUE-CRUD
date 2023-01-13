@@ -9,6 +9,7 @@ export default {
         precio: '',
         imagen: 'imgaen.jpg'
     }),
+    // Funcion que se ejecuta al renderizar el componente
     mounted() {
         this.resetValues()
         if (Object.keys(this.dataProductToEdit).length > 0) {
@@ -18,10 +19,7 @@ export default {
         }
     },
     methods: {
-        logout() {
-            deleteToken();
-            this.$router.push("/login");
-        },
+        // Funcion encargada de enviar los datos ingresados en el formulario, al home
         emitEvent() {
             this.$emit('custom-event', {
                 nombre: this.nombre,
@@ -30,9 +28,11 @@ export default {
             })
             this.resetValues()
         },
+        // Funcion encargada de cerrar la modal de crear productos
         closeModal() {
             this.$emit('custom-event2', false)
         },
+        // Funcion encargada de limpiar valores de un formulario
         resetValues() {
             this.nombre = ''
             this.precio = ''

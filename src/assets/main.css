@@ -61,6 +61,10 @@ input:not([type="button"],[type="submit"]){
   flex-wrap: wrap;
 }
 
+.text-center{
+  text-align: center;
+}
+
 
 /* @import './base.css';
 

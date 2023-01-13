@@ -12,23 +12,28 @@ export default {
         isUpdating: false,
         dataProductToEdit: {}
     }),
+    // Metodo que se ejecuta antes que el componente se renderize
     beforeCreate() {
         renovateToken(localStorage.getItem("token"))
             .catch(resp => {
                 this.$router.push("/login");
             })
     },
+    // Metodo que se ejecuta una vez el componente se ha renderizado
     mounted() {
         this.getProducts();
     },
     methods: {
+        // Funcion encargada de cerrar sesion
         logout() {
             deleteToken();
             this.$router.push("/login");
         },
+        // Funcion encargada de mostrar y ocultar una modal
         manageModal() {
             this.showModal = !this.showModal;
         },
+        // funcion encargada de actualizar y/o crear un producto
         manageProduct({ nombre, precio, imagen }) {
 
             if (this.isUpdating) {
@@ -48,6 +53,7 @@ export default {
             }
             this.resetValues();
         },
+        // Funcion encargada de obtener todos los productos de un usuario
         getProducts() {
             renovateToken(localStorage.getItem("token"))
                 .then(resp => {
@@ -55,7 +61,6 @@ export default {
                     const { id, nombre } = usuario;
                     this.nombre = nombre;
                     this.id_user = id
-                    // localStorage.setItem("token", token);
                     getProductsByUser(id).
                         then(response => {
                             this.products = response.data.producto
@@ -65,16 +70,19 @@ export default {
                     this.$router.push("/login");
                 })
         },
+        // funcion encargada de obtener la informacion de un solo producto
         getProduct(id) {
             this.dataProductToEdit = this.products.filter(item => item._id == id)[0];
             this.isUpdating = true;
             this.showModal = true;
         },
+        // Funcion encargada de resetear un formulario
         resetValues() {
             this.dataProductToEdit = {};
             this.isUpdating = false;
             this.showModal = false;
         },
+        // Funcion encargada de eliminar un producto
         deleteProduct(id) {
             if (confirm("Estas seguro que deseas eliminar este producto")) {
                 deleteProduct(id)
@@ -85,6 +93,7 @@ export default {
                     })
             }
         },
+        // Funcion encargada de actualizar una calificacion
         changeCalificacion(id) {
             updateCalificacion(this.$refs['calif' + id][0].value, id)
                 .then(resp => {
@@ -109,7 +118,8 @@ export default {
         v-bind:dataProductToEdit="this.dataProductToEdit" />
     <div class="container">
 
-        <div class="products d-flex justify-between">
+        <div class="products d-flex justify-between" >
+            <p v-if="!this.products || this.products.length === 0" class="text-center">No hay productos</p>
             <div v-for="value in this.products" class="product">
                 <img src="../assets/logo.svg" alt="" class="mb-5">
                 <h3 class="mb-5">{{ value.nombre }}</h3>
@@ -133,11 +143,9 @@ export default {
 .gp-10 {
     gap: 10px;
 }
-
 .mb-5 {
     margin-bottom: 5px;
 }
-
 .products {
     flex-wrap: wrap;
 
@@ -156,7 +164,6 @@ export default {
         color: green;
     }
 }
-
 .calificacion {
     width: 60px;
 }

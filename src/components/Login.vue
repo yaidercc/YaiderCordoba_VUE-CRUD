@@ -39,7 +39,7 @@ export default {
 <template>
   <div class="container-login">
     <div class="container-logo d-flex justify-center align-center">
-      <h1>LOGO</h1>
+      <h1>TIENDA</h1>
     </div>
     <div class="container-form">
       <h1>Iniciar sesion</h1>

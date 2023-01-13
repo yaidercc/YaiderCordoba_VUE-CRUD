@@ -6,10 +6,12 @@ export default {
     nombre: String
   },
   methods: {
+    // Funcion encargada de cerrar sesion
     logout() {
       deleteToken();
       this.$router.push("/login");
     },
+    // Funcion encargada de emitir el evento para abrir la modal
     emitEvent() {
       this.$emit('custom-event', 'Hello, world!')
     },
@@ -21,9 +23,9 @@ export default {
 <template>
   <div class="container">
     <nav class="d-flex align-center justify-between nav-menu">
-      <h2>LOGO</h2>
+      <h2>TIENDA</h2>
       <div class="links d-flex align-center">
-        <h4>{{this.nombre}}</h4>
+        <h4>{{ this.nombre }}</h4>
         <button @click="emitEvent" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Agregar </button>
         <button @click="logout" class="btn salir-btn">Salir</button>
       </div>
@@ -32,20 +34,22 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-.nav-menu{
+.nav-menu {
   padding: 15px 0;
-  .links{
-    *{
+
+  .links {
+    * {
       margin-right: 5px;
-      
+
     }
   }
 }
-.btn{
+
+.btn {
   width: 100px;
 }
-.salir-btn{
+
+.salir-btn {
   background-color: red;
   width: 50px;
 }
