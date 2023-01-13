@@ -1,11 +1,12 @@
 <script>
-import { loginUser, renovateToken } from "../services/services";
+import { validarInfoToken } from "../services/services";
 export default {
   data: () => ({
     error: false,
     errMsg: "",
     clave: "",
     confirmacionClave: "",
+    id_user: 0
   }),
   // Metodo que se ejecuta una vez el componente se ha renderizado
   mounted() {
@@ -13,37 +14,44 @@ export default {
   },
   methods: {
 
-    async sendEmail() {
-      try {
-        this.errMsg = '';
-        this.error = false;
-        if (this.clave != this.confirmacionClave) {
-          this.errMsg = 'las claves no coinciden';
-          his.error = true;
-        } else {
-          await sendEmailUser(this.correo);
-          alert("correo enviado, revisa tu bandeja de entrada o tu carpeta de spam.")
-          // Redireccionar al login
-          this.$router.push("/login");
-        }
-
-      } catch (error) {
-        // Se valide si son errores de middlewares 
-        this.errMsg = error.response.data.msg || error.response.data.errors[0].msg;
-        this.error = true;
-      }
-    },
     async getInfoToken() {
       try {
         this.errMsg = '';
         this.error = false;
+        // Obtener el token de la url
+        const url = new URL(window.location.href);
+        const token = url.searchParams.get("token");
+        if (!token) {
+          alert("No cuentas con un token valido")
+          this.$router.push("/login");
+        } else {
+          const infoToken = await validarInfoToken(token);
+          this.id_user = infoToken.id_user;
+
+        }
+
+      } catch (error) {
+        // Se valide si son errores de middlewares 
+        console.log(error);
+        if (error.response.data.hasOwnProperty("ok")) {
+          alert("Token expirado")
+          this.$router.push("/login");
+        }
+        this.errMsg = error.response.data.msg || error.response.data.errors[0].msg;
+        this.error = true;
+      }
+    },
+    async resetPassword() {
+      try {
+        this.errMsg = '';
+        this.error = false;
         if (this.clave != this.confirmacionClave) {
           this.errMsg = 'las claves no coinciden';
           his.error = true;
         } else {
-          await sendEmailUser(this.correo);
-          alert("correo enviado, revisa tu bandeja de entrada o tu carpeta de spam.")
+          await this.resetPassword(this.clave, this.id_user);
           // Redireccionar al login
+          alert("clave cambiada con exito");
           this.$router.push("/login");
         }
 
@@ -65,7 +73,7 @@ export default {
     </div>
     <div class="container-form">
       <h1>Recuperar contraseña</h1>
-      <form action @submit.prevent="sendEmail">
+      <form action @submit.prevent="resetPassword">
         <div>
           <label for="email">Ingresa tu clave</label>
           <input v-model="correo" type="email" id="email" placeholder="juanito13@gmail.com" required />
